@@ -1,0 +1,10 @@
+{
+  "name": "netmon-insight-agent",
+  "version": "1.0.0",
+  "description": "NetMon Insight - Agent Simulator",
+  "main": "src/simulator.js",
+  "scripts": {
+    "start": "node src/simulator.js"
+  },
+  "dependencies": {}
+}
