@@ -143,11 +143,59 @@ NetMon_Insight/
 
 ---
 
+## 🐳 Deployment (Tahap Production)
+
+Untuk menjalankan seluruh stack menggunakan Docker Compose:
+
+```bash
+docker-compose up -d --build
+```
+- Backend (API & WS) berjalan di port `3001`
+- Frontend Dashboard berjalan di port `80` (Akses `http://localhost`)
+
+---
+
+## 🚀 Menjalankan Agent (Go) di Linux
+
+Bila Anda memiliki server target Linux sungguhan, gunakan **Agent Go** asli untuk menarik matrik riil dari `/proc/stat`, `/proc/meminfo`, dan `/proc/net/dev`.
+
+### Build Agent
+
+**Bila Anda menggunakan Linux/Mac (Bash):**
+```bash
+cd agent-go
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o netmon-agent main.go
+```
+
+**Bila Anda menggunakan Windows (PowerShell):**
+```powershell
+cd agent-go
+$env:CGO_ENABLED="0"; $env:GOOS="linux"; $env:GOARCH="amd64"; go build -o netmon-agent main.go
+```
+
+### Konfigurasi
+Edit `agent-go/config.yaml`:
+```yaml
+server:
+  url: "http://<IP_SERVER_ANDA>:3001/api/v1/metrics"
+  api_key: "netmon-dev-key"
+```
+
+### Jalankan Agent
+```bash
+./netmon-agent config.yaml
+```
+
+*(Untuk environment testing di Windows, Anda masih bisa menggunakan Agent Simulator di dalam folder `agent/`)*
+
+---
+
 ## 🛣️ Roadmap
 
+- [x] Phase 1: MVP Backend, Frontend, Agent Simulator
+- [x] Phase 1.5: Dockerization & Real Go Agent
 - [ ] Phase 2: WhatsApp alert, SNMP support
-- [ ] Phase 3: AI anomaly detection, auto topology mapping
-- [ ] Production: Go agent for Linux, InfluxDB/TimescaleDB migration
+- [ ] Phase 3: AI anomaly detection, PostgreSQL/TimescaleDB migration
 
 ---
 

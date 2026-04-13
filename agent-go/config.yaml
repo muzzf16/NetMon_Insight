@@ -1,0 +1,32 @@
+# ═══════════════════════════════════════════════════
+# NetMon Insight Agent — Configuration
+# ═══════════════════════════════════════════════════
+
+# Backend API endpoint
+server:
+  url: "http://192.168.0.210:3001/api/v1/metrics"
+  api_key: "netmon-dev-key"
+  timeout: 10  # seconds
+
+# Collection interval in seconds
+interval: 5
+
+# Host identity (auto-detected if empty)
+hostname: ""
+
+# Ping targets for latency/packet loss measurement
+ping:
+  targets:
+    - "192.168.1.1"     # Gateway
+  count: 3              # Pings per target per interval
+  timeout: 3            # Seconds per ping
+
+# Network interfaces to monitor (empty = all non-loopback)
+interfaces:
+  include: []           # e.g. ["eth0", "enp1s0"]
+  exclude: ["lo", "docker0", "br-", "veth"]
+
+# Logging
+log:
+  level: "info"         # debug, info, warn, error
+  file: ""              # Empty = stdout

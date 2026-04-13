@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: netmon-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - API_KEY=netmon-dev-key
+      - PORT=3001
+    volumes:
+      - netmon_data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: netmon-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  netmon_data:
